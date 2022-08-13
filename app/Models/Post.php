@@ -13,10 +13,13 @@ class Post extends Model
 {
     use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
 
-
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     protected $fillable = [
-        'title',
+        'title', 
         'body',
+        'image'
     ];
 
     /**

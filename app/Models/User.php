@@ -9,8 +9,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use Illuminate\Database\Eloquent\Model;
+
 class User extends Authenticatable
 {
+
+
+
     use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
 
     /**
@@ -18,6 +23,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    
+    public function posts(){
+        return $this->hasMany('App\Models\Post');
+    }
+    
+    
     protected $fillable = [
         'name',
         'email',

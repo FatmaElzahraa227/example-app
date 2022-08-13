@@ -14,9 +14,13 @@ use App\Http\Controllers\PostController;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
-//
-
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 Route::view("/", "welcome");
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
@@ -32,14 +36,14 @@ Route::put('/users/update/{id}', [UserController::class, 'update'])->name('users
 Route::put('/users/createe', [UserController::class, 'createe'])->name('users.createe');
 
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-Route::get('/posts', [PostController::class, 'index'])->name('[posts].index');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 
 Route::post('/posts', [PostController::class, 'store'])->name('posts.index');
 
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
-
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
 
 Route::put('/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
@@ -50,3 +54,4 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.de
 Route::fallback(function () {
     return '<h1>Error, try again</h1>';
 });
+require __DIR__.'/auth.php';

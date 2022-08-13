@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 
 class UserController extends Controller
 {
     function index(){
-        return view('users.index', ['users'=>$users=User::paginate(15)]);
+        $users=User::withCount('posts')->paginate(15);
+        return view('users.index', ['users'=>$users=User::withCount('posts')->paginate(15) ]);
+        
     }
 
     function createe(Request $request){
@@ -33,7 +35,7 @@ class UserController extends Controller
         
     }
     function edit($id){
-        $user=User::find($id);
+        $user=User::with('posts')->find($id);
         return view('users.edit', ['user' => $user]) ;
     
     }
